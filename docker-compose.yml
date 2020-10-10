@@ -1,0 +1,38 @@
+version: '3.4'
+
+services:
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile-mongodb
+    volumes:
+    - ./jimiData/db:/data/db
+
+  core:
+    depends_on: 
+    - db
+    build:
+      context: .
+      dockerfile: Dockerfile-jimi_core
+    volumes:
+    - ./jimiData/settings.json:/jimi/data/settings.json:ro
+    - ./jimiData/sessionPub.pem:/jimi/data/sessionPub.pem:ro
+    - ./jimiData/sessionPriv.pem:/jimi/data/sessionPriv.pem:ro
+    - ./jimiData/log:/jimi/log
+    - ./jimiData/plugins:/jimi/plugins
+    tty: true
+
+  web:
+    depends_on: 
+    - db
+    build:
+      context: .
+      dockerfile: Dockerfile-jimi_web
+    volumes:
+      - ./jimiData/settings.json:/jimi/data/settings.json:ro
+      - ./jimiData/sessionPub.pem:/jimi/data/sessionPub.pem:ro
+      - ./jimiData/sessionPriv.pem:/jimi/data/sessionPriv.pem:ro
+      - ./jimiData/log:/jimi/log
+      - ./jimiData/plugins:/jimi/plugins
+    ports:
+    - "5002:5002"
