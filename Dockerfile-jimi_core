@@ -1,34 +1,19 @@
 # Build from debian
 FROM debian:stable-slim
 
-# Update system
-RUN apt-get update
-RUN apt-get upgrade -y
-
 # Install requirements
-RUN apt-get install -y python3 python3-pip screen git
+RUN apt-get update && apt-get install -y --no-install-recommends python3-minimal python3-setuptools python3-wheel python3-pip git && rm -rf /var/lib/apt/lists/*
 
 # Transfer jimi system files
-RUN git clone https://github.com/z1pti3/jimi.git /jimi
-RUN pip3 install -r /jimi/requirements.txt
+RUN git clone https://github.com/z1pti3/jimi.git /jimi && pip3 install -r /jimi/requirements.txt
 
 # Install jimi stable plugin requirements
 #RUN pip3 install selenium
 #RUN pip3 install numpy
 #RUN pip3 install matplotlib
 #RUN pip3 install sklearn
-RUN pip3 install paramiko
-RUN pip3 install pywinrm
-RUN pip3 install smbprotocol
-RUN pip3 install scp
+RUN pip3 install paramiko pywinrm smbprotocol scp
 
-#RUN apt-get install -y wget firefox-esr
-#RUN mkdir /opt/geckodriver
-#WORKDIR /opt/geckodriver
-#RUN wget https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz
-#RUN tar -xvzf geckodriver*
-#RUN chmod +rx geckodriver
-#RUN mv geckodriver /usr/bin/
 
 # Run
 WORKDIR /jimi

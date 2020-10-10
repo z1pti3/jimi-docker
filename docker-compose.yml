@@ -4,22 +4,22 @@ services:
   db:
     build:
       context: .
-      dockerfile: Dockerfile-mongodb
+      dockerfile: .docker/Dockerfile-mongodb
     volumes:
-    - ./jimiData/db:/data/db
+    - ./.docker/docker-data/db:/data/db
 
   core:
     depends_on: 
     - db
     build:
       context: .
-      dockerfile: Dockerfile-jimi_core
+      dockerfile: .docker/Dockerfile-jimi_core
     volumes:
-    - ./jimiData/settings.json:/jimi/data/settings.json:ro
-    - ./jimiData/sessionPub.pem:/jimi/data/sessionPub.pem:ro
-    - ./jimiData/sessionPriv.pem:/jimi/data/sessionPriv.pem:ro
-    - ./jimiData/log:/jimi/log
-    - ./jimiData/plugins:/jimi/plugins
+    - ./.docker/docker-data/settings.json:/jimi/data/settings.json:ro
+    - ./.docker/docker-data/sessionPub.pem:/jimi/data/sessionPub.pem:ro
+    - ./.docker/docker-data/sessionPriv.pem:/jimi/data/sessionPriv.pem:ro
+    - ./.docker/docker-data/log:/jimi/log
+    - ./.docker/docker-data/plugins:/jimi/plugins
     tty: true
 
   web:
@@ -27,12 +27,12 @@ services:
     - db
     build:
       context: .
-      dockerfile: Dockerfile-jimi_web
+      dockerfile: .docker/Dockerfile-jimi_web
     volumes:
-      - ./jimiData/settings.json:/jimi/data/settings.json:ro
-      - ./jimiData/sessionPub.pem:/jimi/data/sessionPub.pem:ro
-      - ./jimiData/sessionPriv.pem:/jimi/data/sessionPriv.pem:ro
-      - ./jimiData/log:/jimi/log
-      - ./jimiData/plugins:/jimi/plugins
+    - ./.docker/docker-data/settings.json:/jimi/data/settings.json:ro
+    - ./.docker/docker-data/sessionPub.pem:/jimi/data/sessionPub.pem:ro
+    - ./.docker/docker-data/sessionPriv.pem:/jimi/data/sessionPriv.pem:ro
+    - ./.docker/docker-data/log:/jimi/log
+    - ./.docker/docker-data/plugins:/jimi/plugins
     ports:
     - "5002:5002"
