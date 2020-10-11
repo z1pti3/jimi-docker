@@ -17,4 +17,4 @@ RUN pip3 install paramiko pywinrm smbprotocol scp
 
 # Run
 WORKDIR /jimi
-CMD python3 jimi_core.py
+CMD python3 jimi_web.py

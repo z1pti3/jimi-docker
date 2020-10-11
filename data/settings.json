@@ -56,7 +56,7 @@
     },
     "file" : {
         "enabled" : true,
-        "logdir" : "log"
+        "logdir" : "data/log"
     }
     },
     "auth" : {
