@@ -2,8 +2,8 @@
 FROM debian:stable-slim
 
 # Install requirements
-RUN apt-get update && apt-get install -y --no-install-recommends python3-minimal python3-pip git && rm -rf /var/lib/apt/lists/*
-RUN apt-get update && apt-get install -y --no-install-recommends python3-dev python3-setuptools python3-wheel gcc && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends python3-minimal python3-setuptools python3-wheel python3-pip git && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends python3-dev gcc libffi-dev libssl-dev make && rm -rf /var/lib/apt/lists/*
 
 # Transfer jimi system files
 RUN git clone https://github.com/z1pti3/jimi.git /jimi && pip3 install -r /jimi/requirements.txt
@@ -14,7 +14,6 @@ RUN git clone https://github.com/z1pti3/jimi.git /jimi && pip3 install -r /jimi/
 #RUN pip3 install matplotlib
 #RUN pip3 install sklearn
 RUN pip3 install paramiko pywinrm smbprotocol scp
-
 
 # Run
 WORKDIR /jimi
