@@ -8,6 +8,10 @@ docker rm jimi_core
 docker rm jimi_web
 docker rm jimi_db
 
+docker rmi z1pti3/jimi_core:amd64
+docker rmi z1pti3/jimi_web:amd64
+docker rmi mongo:latest
+
 docker pull mongo:latest
 docker pull z1pti3/jimi_core:amd64
 docker pull z1pti3/jimi_web:amd64
