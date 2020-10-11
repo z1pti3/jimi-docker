@@ -1,7 +1,7 @@
 {
     "system" : {
         "systemID" : 0,
-        "accessAddress" : "jimi_core_1",
+        "accessAddress" : "jimi_core",
         "accessPort" : 5000
     },
     "debug" : {
@@ -9,7 +9,7 @@
         "buffer" : 1000
     },
     "mongodb": {
-        "hosts" : ["jimi_db_1:27017"],
+        "hosts" : ["jimi_db:27017"],
         "db" : "jimi",
         "username" : null,
         "password" : null
