@@ -2,19 +2,33 @@
 FROM debian:stable-slim
 
 # Install requirements
-RUN apt-get update && apt-get install -y --no-install-recommends python3-minimal python3-setuptools python3-wheel python3-pip git && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends python3-minimal python3-venv python3-pip python3-setuptools python3-wheel git unzip wget && rm -rf /var/lib/apt/lists/*
 RUN apt-get update && apt-get install -y --no-install-recommends python3-dev gcc libffi-dev libssl-dev make && rm -rf /var/lib/apt/lists/*
 
+# Create and change user to jimi
+RUN useradd jimi && mkdir /home/jimi && chown jimi:jimi /home/jimi
+USER jimi
+
 # Transfer jimi system files
-RUN git clone https://github.com/z1pti3/jimi.git /jimi && pip3 install -r /jimi/requirements.txt
+WORKDIR /home/jimi/
+#RUN git clone https://github.com/z1pti3/jimi.git /jimi && pip3 install -r /jimi/requirements.txt
+RUN wget https://github.com/z1pti3/jimi/archive/v1.45.zip && unzip v1.45.zip && mv jimi-1.45 jimi
+
+# Building python venv
+ENV VIRTUAL_ENV=/home/jimi/venv
+RUN python3 -m venv venv
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
+# Installing core requirements
+RUN pip install wheel && pip install -r jimi/requirements.txt
 
 # Install jimi stable plugin requirements
 #RUN pip3 install selenium
 #RUN pip3 install numpy
 #RUN pip3 install matplotlib
 #RUN pip3 install sklearn
-RUN pip3 install paramiko pywinrm smbprotocol scp
+RUN pip install paramiko pywinrm smbprotocol scp
 
 # Run
-WORKDIR /jimi
-CMD python3 jimi_core.py
+WORKDIR /home/jimi/jimi
+CMD ["python", "jimi_core.py"]
