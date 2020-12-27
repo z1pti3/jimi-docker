@@ -29,4 +29,4 @@ services:
     - ./data/log:/home/jimi/jimi/log
     - ./data/plugins:/home/jimi/jimi/plugins
     ports:
-    - "443:443"
+    - "4443:4443"
