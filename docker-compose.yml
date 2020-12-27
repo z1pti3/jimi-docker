@@ -13,9 +13,7 @@ services:
       context: .
       dockerfile: Dockerfile-jimi_core
     volumes:
-    - ./data/settings.json:/home/jimi/jimi/data/settings.json:ro
-    - ./data/sessionPub.pem:/home/jimi/jimi/data/sessionPub.pem:ro
-    - ./data/sessionPriv.pem:/home/jimi/jimi/data/sessionPriv.pem:ro
+    - ./data:/home/jimi/jimi/data
     - ./data/log:/home/jimi/jimi/log
     - ./data/plugins:/home/jimi/jimi/plugins
     tty: true
@@ -27,10 +25,8 @@ services:
       context: .
       dockerfile: Dockerfile-jimi_web
     volumes:
-    - ./data/settings.json:/home/jimi/jimi/data/settings.json:ro
-    - ./data/sessionPub.pem:/home/jimi/jimi/data/sessionPub.pem:ro
-    - ./data/sessionPriv.pem:/home/jimi/jimi/data/sessionPriv.pem:ro
+    - ./data:/home/jimi/jimi/data
     - ./data/log:/home/jimi/jimi/log
     - ./data/plugins:/home/jimi/jimi/plugins
     ports:
-    - "5002:5002"
+    - "443:443"

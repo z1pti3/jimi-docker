@@ -4,7 +4,6 @@ FROM debian:stable-slim
 # Install requirements
 RUN apt-get update && apt-get install -y --no-install-recommends python3-minimal python3-venv python3-pip python3-setuptools python3-wheel git unzip wget && rm -rf /var/lib/apt/lists/*
 RUN apt-get update && apt-get install -y --no-install-recommends python3-dev gcc libffi-dev libssl-dev make && rm -rf /var/lib/apt/lists/*
-RUN apt-get update && apt-get install -y --no-install-recommends gunicorn && rm -rf /var/lib/apt/lists/*
 
 # Create and change user to jimi
 RUN useradd jimi && mkdir /home/jimi && chown jimi:jimi /home/jimi
@@ -12,8 +11,8 @@ USER jimi
 
 # Transfer jimi system files
 WORKDIR /home/jimi/
-#RUN git clone https://github.com/z1pti3/jimi.git /jimi && pip3 install -r /jimi/requirements.txt
-RUN wget https://github.com/z1pti3/jimi/archive/v1.7.zip && unzip v1.7.zip && mv jimi-1.7 jimi
+#RUN git clone https://github.com/z1pti3/jimi.git jimi
+RUN wget https://github.com/z1pti3/jimi/archive/v1.72.zip && unzip v1.72.zip && mv jimi-1.72 jimi
 
 # Building python venv
 ENV VIRTUAL_ENV=/home/jimi/venv
@@ -30,6 +29,11 @@ RUN pip install wheel && pip install -r jimi/requirements.txt
 #RUN pip3 install sklearn
 RUN pip install paramiko pywinrm smbprotocol scp
 
+RUN pip install pip install gunicorn
+WORKDIR /home/jimi/jimi/
+RUN head jimi_web.py -n -4 > jimi_web2.py && rm jimi_web.py && mv jimi_web2.py jimi_web.py
+RUN echo "from jimi_web import api\n\napplication = api.webServer\n\nif __name__ == '__main__':\n\tapplication.run()" > start.py
+RUN echo "gunicorn --bind 0.0.0.0:443 --workers 4 --threads 10 --certfile=data/web.cert --key=data/web.key start" > start_web.sh
+
 # Run
-WORKDIR /home/jimi/jimi
-CMD ["python", "jimi_web.py"]
+CMD ["bash", "start_web.sh"]
