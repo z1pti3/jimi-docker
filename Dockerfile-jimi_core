@@ -2,8 +2,11 @@
 FROM debian:stable-slim
 
 # Install requirements
+RUN apt-get update && apt-get install -y --no-install-recommends build-essentials curl  && rm -rf /var/lib/apt/lists/*
 RUN apt-get update && apt-get install -y --no-install-recommends python3-minimal python3-venv python3-pip python3-setuptools python3-wheel git unzip wget && rm -rf /var/lib/apt/lists/*
 RUN apt-get update && apt-get install -y --no-install-recommends python3-dev gcc libffi-dev libssl-dev make && rm -rf /var/lib/apt/lists/*
+
+RUN curl https://sh.rustup.rs -sSf | sh
 
 # Create and change user to jimi
 RUN useradd jimi && mkdir /home/jimi && chown jimi:jimi /home/jimi
@@ -22,10 +25,10 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 RUN pip install wheel && pip install -r jimi/requirements.txt
 
 # Install jimi stable plugin requirements
-#RUN pip3 install selenium
-#RUN pip3 install numpy
-#RUN pip3 install matplotlib
-#RUN pip3 install sklearn
+RUN pip3 install selenium
+RUN pip3 install numpy
+RUN pip3 install matplotlib
+RUN pip3 install sklearn
 RUN pip install paramiko pywinrm smbprotocol scp
 
 # Run
