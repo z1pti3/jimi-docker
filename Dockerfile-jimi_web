@@ -11,8 +11,7 @@ USER jimi
 
 # Transfer jimi system files
 WORKDIR /home/jimi/
-#RUN git clone https://github.com/z1pti3/jimi.git jimi
-RUN wget https://github.com/z1pti3/jimi/archive/v1.72.zip && unzip v1.72.zip && mv jimi-1.72 jimi
+RUN git clone https://github.com/z1pti3/jimi.git jimi
 
 # Building python venv
 ENV VIRTUAL_ENV=/home/jimi/venv
