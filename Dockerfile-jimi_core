@@ -1,12 +1,9 @@
-# Build from debian
-FROM debian:stable-slim
+# Build from ubuntu
+FROM ubuntu:latest
 
 # Install requirements
-RUN apt-get update && apt-get install -y --no-install-recommends build-essentials curl  && rm -rf /var/lib/apt/lists/*
-RUN apt-get update && apt-get install -y --no-install-recommends python3-minimal python3-venv python3-pip python3-setuptools python3-wheel git unzip wget && rm -rf /var/lib/apt/lists/*
-RUN apt-get update && apt-get install -y --no-install-recommends python3-dev gcc libffi-dev libssl-dev make && rm -rf /var/lib/apt/lists/*
-
-RUN curl https://sh.rustup.rs -sSf | sh
+RUN apt-get update && apt-get install -y --no-install-recommends python3-minimal python3-venv python3-pip python3-setuptools python3-wheel git unzip wget ca-certificates && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends python3-dev gcc libffi-dev libssl-dev build-essential make && rm -rf /var/lib/apt/lists/*
 
 # Create and change user to jimi
 RUN useradd jimi && mkdir /home/jimi && chown jimi:jimi /home/jimi
