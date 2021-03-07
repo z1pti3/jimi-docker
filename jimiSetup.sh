@@ -28,6 +28,11 @@ rm private.pem
 
 openssl req -newkey rsa:2048 -nodes -keyout web.key -x509 -days 365 -out web.cert -subj "/C=GB/ST=London/L=London/O=jimi/OU=jimi/CN=jimiproject"
 
+cd ..
+adduser --no-create-home --disabled-password --gecos "" jimi
+chown jimi:jimi -R data/
+chown jimi:jimi -R plugins/
+
 cd $dir
 
 docker network create jimi_network
