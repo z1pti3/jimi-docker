@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 mkdir jimi
 cd jimi
@@ -28,7 +28,7 @@ openssl req -newkey rsa:2048 -nodes -keyout web.key -x509 -days 365 -out web.cer
 
 cd ..
 
-dir=$(PWD)
+dir=$(pwd)
 docker network create jimi_network
 docker run -d -v $dir/jimi/db:/data/db --net jimi_network --name jimi_db mongo:latest
 docker run -it -d -v $dir/jimi/data:/home/jimi/jimi/data -v $dir/jimi/plugins:/home/jimi/jimi/plugins --net jimi_network --name jimi_core z1pti3/jimi_core:amd64
