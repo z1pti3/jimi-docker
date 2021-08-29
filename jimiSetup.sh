@@ -20,6 +20,7 @@ git clone https://github.com/z1pti3/jimiPlugin-api.git plugins/api
 
 cd data
 mkdir temp
+mkdir storage
 mkdir log
 wget https://raw.githubusercontent.com/z1pti3/jimi-docker/master/data/settings.json
 openssl genrsa -out private.pem 2048
